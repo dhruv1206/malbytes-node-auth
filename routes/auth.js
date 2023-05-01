@@ -103,6 +103,9 @@ authRouter.get("/tokenIsValid", async (req, res) => {
 authRouter.post("/api/addEmail", auth, async (req, res) => {
   try {
     const { email } = req.body;
+    const emailCheck = await User.findOne({ email });
+    if (emailCheck)
+      return res.status(400).json({ msg: "Email already exists!" });
     const user = await User.findById(req.user);
     user.email = email;
     await user.save();
