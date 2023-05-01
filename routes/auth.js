@@ -19,6 +19,15 @@ function makeid(length) {
   return result;
 }
 
+authRouter.delete("/api/delete", auth, async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.user);
+    res.json(deletedUser);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 authRouter.get("/api/signup", async (req, res) => {
   try {
     console.log("SIGNUP");
@@ -61,7 +70,7 @@ authRouter.post("/api/signin", async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ msg: "User with this userId does not exist!" });
+        .json({ msg: "User with this User Id does not exist!" });
     }
     const isMatch = await bcryptjs.compare(password, user.password);
     if (!isMatch) {
