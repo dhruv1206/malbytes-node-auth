@@ -25,7 +25,12 @@ authRouter.get("/api/signup", async (req, res) => {
     const userId = makeid(5);
     const password = makeid(10);
     console.log(userId, password);
-    // const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ userId });
+
+    while (existingUser != null) {
+      userId = makeid(5);
+      existingUser = await User.findOne({ userId });
+    }
 
     // if (existingUser) {
     //   return res
