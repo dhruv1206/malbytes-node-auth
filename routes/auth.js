@@ -100,6 +100,18 @@ authRouter.get("/tokenIsValid", async (req, res) => {
   }
 });
 
+authRouter.post("/api/addEmail", auth, async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findById(req.user);
+    user.email = email;
+    await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 authRouter.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user);
