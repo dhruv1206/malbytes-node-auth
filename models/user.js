@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const SpamMessage = require("./spam-message");
+const SpamNumber = require("./spam-number");
 
 const userSchema = mongoose.Schema({
   userId: {
@@ -29,6 +31,24 @@ const userSchema = mongoose.Schema({
       message: "Please enter a long password!",
     },
   },
+  //
+
+  //
+  // array of spam numbers marked by the user (array of models\spam-number.js)
+  spamNumbers: [
+    {
+      number: {
+        required: true,
+        type: String,
+        trim: true,
+      },
+      rating: {
+        required: true,
+        type: Number,
+      },
+    },
+  ],
+  // list of spam messages marked by the user (array of models\spam-message.js)
 
   type: {
     type: String,
